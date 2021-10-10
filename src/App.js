@@ -1,6 +1,7 @@
 import React from "react";
 
 function App() {
+  const [percentages, setPercentages] = React.useState([0, 0, 0, 0]);
   const ref = React.useRef();
 
   const imageUpload = (input) => {
@@ -44,6 +45,7 @@ function App() {
     console.log("Red Count:", redCount);
     console.log("Green Count:", greenCount);
     console.log("Blue Count:", blueCount);
+    setPercentages([redCount, greenCount, blueCount, imageData.length / 4]);
   };
 
   return (
@@ -57,6 +59,25 @@ function App() {
         onChange={imageUpload}
       ></input>
       <canvas ref={ref} />
+      {percentages[3] > 0 && (
+        <div>
+          <p>
+            There are {percentages[0]} red pixels. Taking up{" "}
+            {Math.round((percentages[0] / percentages[3]) * 100, 2)}% of the
+            image.
+          </p>
+          <p>
+            There are {percentages[1]} green pixels. Taking up{" "}
+            {Math.round((percentages[1] / percentages[3]) * 100, 2)}% of the
+            image.
+          </p>
+          <p>
+            There are {percentages[2]} blue pixels. Taking up{" "}
+            {Math.round((percentages[2] / percentages[3]) * 100, 2)}% of the
+            image.
+          </p>
+        </div>
+      )}
     </div>
   );
 }
